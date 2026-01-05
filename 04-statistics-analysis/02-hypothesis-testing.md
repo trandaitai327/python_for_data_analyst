@@ -1,1 +1,1 @@
-# 02. Hypothesis Testing (Đang cập nhật)
+# 02. Hypothesis Testing (coming soon)
