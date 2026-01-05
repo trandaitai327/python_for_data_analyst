@@ -40,8 +40,8 @@ Tạo charts và dashboards chuyên nghiệp.
 Phân tích thống kê và kiểm định giả thuyết.
 
 - [01. Descriptive Statistics](04-statistics-analysis/01-descriptive-statistics.md) - Mean, median, std, distributions
-- [02. Hypothesis Testing](04-statistics-analysis/02-hypothesis-testing.md) - T-test, chi-square, ANOVA
-- [03. Correlation & Regression](04-statistics-analysis/03-correlation-regression.md) - Phân tích tương quan và hồi quy
+- [02. Hypothesis Testing](04-statistics-analysis/02-hypothesis-testing.md) - T-test, chi-square, ANOVA  (coming soon)
+- [03. Correlation & Regression](04-statistics-analysis/03-correlation-regression.md) - Phân tích tương quan và hồi quy (coming soon)
 
 ### 🔴 Phần 5: Nâng Cao (coming soon)
 
