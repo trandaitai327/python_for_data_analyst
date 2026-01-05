@@ -51,14 +51,8 @@ Kỹ năng nâng cao cho Data Analyst chuyên nghiệp.
 - [03. Automation & Scheduling](05-advanced/03-automation.md) - Tự động hóa báo cáo
 - [04. Machine Learning Basics](05-advanced/04-machine-learning-basics.md) - Scikit-learn, model cơ bản
 
-### 🟣 Phần 6: Problem-Solving & Insights
-Kiến thức phân tích, tìm nguyên nhân và đưa ra actionable insights.
+### 🟣 Phần 6: Problem-Solving & Insights (coming soon)
 
-- [01. Root Cause Analysis](06-problem-solving-insights/01-root-cause-analysis.md) - Phân tích nguyên nhân gốc rễ (5 Whys, Fishbone, Pareto)
-- [02. Analytical Frameworks](06-problem-solving-insights/02-analytical-frameworks.md) - AARRR, SWOT, RFM, Cohort Analysis
-- [03. Actionable Insights](06-problem-solving-insights/03-actionable-insights.md) - Chuyển dữ liệu thành hành động cụ thể
-- [04. Data Storytelling](06-problem-solving-insights/04-data-storytelling.md) - Kể chuyện bằng dữ liệu
-- [05. Case Studies](06-problem-solving-insights/05-case-studies.md) - Case studies thực tế
 
 ## 🚀 Bắt Đầu Học
 
