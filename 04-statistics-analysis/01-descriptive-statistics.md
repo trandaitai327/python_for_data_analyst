@@ -2,21 +2,44 @@
 
 ## Mục Tiêu
 - Tính các thống kê mô tả: mean, median, mode, std
-- Hiểu về phân bố dữ liệu
-- Phát hiện skewness và kurtosis
-- Sử dụng pandas và scipy cho thống kê
+- Hiểu về phân bố dữ liệu và các dạng phân bố hay gặp
+- Phân biệt được population vs sample, parameter vs statistic
+- Phát hiện skewness và kurtosis và hiểu ý nghĩa trực quan
+- Sử dụng pandas và scipy cho thống kê mô tả phục vụ phân tích dữ liệu thực tế
 
 ## Descriptive Statistics Là Gì?
 
-Thống kê mô tả giúp:
+**Descriptive statistics (thống kê mô tả)** là tập hợp các công cụ giúp bạn:
 - **Tóm tắt dữ liệu**: Mean, median, mode
-- **Đo lường độ phân tán**: Std, variance, range
-- **Hiểu phân bố**: Skewness, kurtosis
-- **So sánh nhóm**: Group statistics
+- **Đo lường độ phân tán**: Std, variance, range, IQR
+- **Hiểu hình dạng phân bố**: Skewness, kurtosis
+- **So sánh nhóm**: Group statistics theo nhiều chiều (product, region, segment,…)
+
+Khác với **inferential statistics (thống kê suy luận)**, thống kê mô tả:
+- Không cố gắng suy luận cho toàn bộ population
+- Tập trung mô tả chính xác sample hiện có
+- Là bước **bắt buộc** trước khi làm bất kỳ mô hình hay kiểm định nào
+
+### Population vs Sample (Tổng Thể vs Mẫu)
+
+- **Population**: Toàn bộ tập đối tượng bạn quan tâm (tất cả khách hàng, tất cả đơn hàng năm 2024,…)
+- **Sample**: Một phần rút ra từ population (1.000 khách hàng được survey,…)
+- **Parameter**: Giá trị thật của population (μ, σ², p,…) – thường không biết
+- **Statistic**: Giá trị tính từ sample (x̄, s², p̂,…) – dùng để ước lượng parameter
+
+Trong thực tế Data Analyst gần như **luôn** làm việc với sample → các thống kê bạn tính (mean, std,…) là **estimates** chứ không phải giá trị tuyệt đối.
 
 ## 1. Central Tendency (Xu Hướng Trung Tâm)
 
 ### Mean (Trung Bình)
+
+Với dữ liệu \(x_1, x_2, ..., x_n\), **mean** được định nghĩa:
+\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\]
+
+- Nhạy cảm với **outliers**
+- Phù hợp khi phân bố không quá lệch, không có giá trị cực đoan
 
 ```python
 import pandas as pd
@@ -39,6 +62,10 @@ print(f"Trung bình (pandas): {df['Sales'].mean():,.0f} VND")
 
 Giá trị ở giữa khi sắp xếp dữ liệu.
 
+Tính chất:
+- Ít bị ảnh hưởng bởi **outliers** và phân bố lệch
+- Thường được dùng để mô tả **thu nhập**, **giá nhà**,… (dữ liệu rất hay lệch phải)
+
 ```python
 # Median
 median_sales = np.median(sales)
@@ -56,6 +83,10 @@ print(f"Median với outlier: {np.median(sales_with_outlier):,.0f} VND")
 ### Mode (Mốt)
 
 Giá trị xuất hiện nhiều nhất.
+
+Mode hữu ích khi:
+- Dữ liệu là **categorical** (loại sản phẩm phổ biến nhất,…)
+- Dữ liệu numeric nhưng có nhiều giá trị trùng nhau (ví dụ score, rating,…)
 
 ```python
 # Mode
@@ -87,7 +118,19 @@ print("\n→ Median ít bị ảnh hưởng bởi outliers")
 
 ## 2. Measures of Dispersion (Độ Phân Tán)
 
+Các chỉ số độ phân tán cho biết **dữ liệu “vung vãi” quanh trung tâm thế nào**:
+- Nếu độ phân tán nhỏ → dữ liệu ổn định, ít biến động
+- Nếu độ phân tán lớn → dữ liệu biến động mạnh, rủi ro cao hơn
+
 ### Standard Deviation (Độ Lệch Chuẩn)
+
+Với mẫu \(x_1, x_2, ..., x_n\), sample standard deviation:
+\[
+s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n}(x_i - \bar{x})^2}
+\]
+
+- Std càng lớn → dữ liệu càng phân tán
+- Thường đi kèm mean để mô tả dữ liệu: “Doanh số trung bình 50M ± 10M”
 
 ```python
 # Standard deviation
@@ -103,6 +146,14 @@ print(f"Std (pandas): {df['Sales'].std():,.0f} VND")
 ```
 
 ### Variance (Phương Sai)
+
+Phương sai là **bình phương của độ lệch chuẩn**:
+\[
+s^2 = \frac{1}{n-1} \sum_{i=1}^{n}(x_i - \bar{x})^2
+\]
+
+- Đơn vị là “bình phương” của đơn vị gốc → khó diễn giải trực quan
+- Thường dùng nhiều trong các công thức toán, mô hình (ví dụ: phân phối chuẩn, ANOVA,…)
 
 ```python
 # Variance
@@ -145,6 +196,15 @@ print("\n→ Group B có độ phân tán lớn hơn (std cao hơn)")
 ```
 
 ## 3. Distribution (Phân Bố)
+
+Dữ liệu thực tế thường:
+- Không hoàn toàn chuẩn (normal)
+- Có thể lệch phải (right-skewed) hoặc lệch trái (left-skewed)
+
+Hiểu phân bố giúp bạn:
+- Chọn thước đo trung tâm phù hợp (mean vs median)
+- Chọn phương pháp thống kê (parametric vs non-parametric)
+- Nhận diện dữ liệu “bẩn” hoặc bất thường
 
 ### Skewness (Độ Lệch)
 
@@ -216,6 +276,18 @@ print(sales_data.groupby("Product").agg({
 
 ## 5. Z-Score (Chuẩn Hóa)
 
+**Z-score** cho biết **một điểm nằm cách mean bao nhiêu độ lệch chuẩn**:
+\[
+z = \frac{x - \bar{x}}{s}
+\]
+
+- \(|z| > 2\): thường xem là giá trị **bất thường nhẹ**
+- \(|z| > 3\): thường xem là **outlier mạnh**
+
+Ứng dụng:
+- Phát hiện giá trị bất thường trong doanh số, lượng truy cập, số lần login,…
+- Chuẩn hóa dữ liệu trước khi đưa vào model (đặc biệt với các thuật toán nhạy scale)
+
 ```python
 # Z-score: (x - mean) / std
 z_scores = stats.zscore(sales_data["Sales"])
@@ -230,6 +302,14 @@ print(f"\nSố outliers: {len(outliers)}")
 ```
 
 ## 6. Correlation (Tương Quan)
+
+Correlation đo lường **mức độ tuyến tính** giữa các biến:
+- Gần +1: quan hệ tuyến tính dương mạnh
+- Gần -1: quan hệ tuyến tính âm mạnh
+- Gần 0: ít hoặc không có quan hệ tuyến tính
+
+⚠️ **Lưu ý quan trọng**: *Correlation ≠ Causation*  
+Hai biến có tương quan mạnh **không có nghĩa** là một biến gây ra biến kia. Cần thêm phân tích business, thiết kế experiment, hoặc kiểm định nhân quả.
 
 ```python
 # Correlation matrix

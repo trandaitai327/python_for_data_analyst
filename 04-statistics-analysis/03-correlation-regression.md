@@ -1,15 +1,40 @@
 # 03. Correlation & Regression
 
 ## Mục Tiêu
-- Hiểu về correlation và regression
-- Tính correlation coefficient
-- Thực hiện linear regression
-- Đánh giá model quality
-- Dự đoán với regression model
+- Hiểu rõ bản chất **correlation** và **regression**
+- Biết cách diễn giải correlation coefficient và tránh bẫy “correlation ≠ causation”
+- Thực hiện simple & multiple linear regression bằng Python
+- Hiểu và kiểm tra các **giả định** của mô hình hồi quy tuyến tính
+- Đánh giá model quality (R², RMSE, residuals) và dùng model để dự đoán
 
 ## Correlation (Tương Quan)
 
-Correlation đo lường mối quan hệ tuyến tính giữa 2 biến.
+Correlation đo lường **mức độ và chiều hướng quan hệ tuyến tính** giữa 2 biến.
+
+Giá trị hệ số tương quan \(r\) (Pearson):
+- \(r \in [-1, 1]\)
+- \(r > 0\): tương quan dương (x tăng → y tăng)
+- \(r < 0\): tương quan âm (x tăng → y giảm)
+- |r| càng gần 1 → tương quan tuyến tính càng mạnh
+
+**Quy ước thường dùng** (không tuyệt đối, tùy lĩnh vực):
+- |r| < 0.2: Rất yếu
+- 0.2 ≤ |r| < 0.4: Yếu
+- 0.4 ≤ |r| < 0.7: Trung bình
+- 0.7 ≤ |r| < 0.9: Mạnh
+- |r| ≥ 0.9: Rất mạnh (cảnh giác trùng lặp thông tin / multicollinearity)
+
+### Công Thức Pearson Correlation
+
+Với dữ liệu \((x_i, y_i)\) cho i = 1…n:
+\[
+r = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}
+         {\sqrt{\sum_{i=1}^{n} (x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}
+\]
+
+Giả định chính:
+- Quan hệ **gần tuyến tính**
+- Dữ liệu numeric, không có quá nhiều outliers
 
 ### Pearson Correlation
 
@@ -93,6 +118,20 @@ print(corr["Revenue"].sort_values(ascending=False))
 ```
 
 ## Linear Regression (Hồi Quy Tuyến Tính)
+
+**Regression** trả lời câu hỏi:
+- “Khi X thay đổi 1 đơn vị, Y thay đổi **trung bình** bao nhiêu?”
+- “Y sẽ có giá trị kỳ vọng bao nhiêu khi X = x?”
+
+### Ý Nghĩa Business
+
+Ví dụ với `Revenue ~ Price + Marketing + Satisfaction`:
+- Hệ số của `Marketing`: tăng 1 đơn vị chi tiêu marketing → revenue tăng trung bình bao nhiêu
+- Hệ số của `Price`: giá tăng thêm 1 đơn vị → revenue thay đổi thế nào (giữ các biến khác cố định)
+
+Regression khác với correlation:
+- Correlation: **đối xứng** giữa X và Y, không phân biệt input/output
+- Regression: chọn rõ ràng **biến giải thích (X)** và **biến mục tiêu (Y)**
 
 ### Simple Linear Regression
 

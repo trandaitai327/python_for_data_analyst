@@ -1,30 +1,71 @@
 # 02. Hypothesis Testing
 
 ## Mục Tiêu
-- Hiểu về hypothesis testing
-- Thực hiện t-test, chi-square test, ANOVA
-- Hiểu p-value và significance level
-- Áp dụng vào phân tích dữ liệu thực tế
+- Hiểu rõ bản chất **hypothesis testing** (kiểm định giả thuyết)
+- Biết phân biệt H0, H1, p-value, α, power, type I & type II error
+- Thực hiện t-test, chi-square test, ANOVA bằng Python
+- Chọn test phù hợp với từng loại dữ liệu và câu hỏi business
+- Áp dụng vào phân tích dữ liệu thực tế (A/B test, so sánh nhóm,…)
 
 ## Hypothesis Testing Là Gì?
 
-Kiểm định giả thuyết giúp:
-- **Đưa ra quyết định**: Dựa trên dữ liệu, không phải cảm tính
-- **Kiểm chứng giả thuyết**: Ví dụ: "Chiến dịch marketing có hiệu quả không?"
-- **So sánh nhóm**: Ví dụ: "Doanh số 2 khu vực có khác nhau không?"
+**Hypothesis testing** là khung tư duy để:
+- **Đưa ra quyết định** dựa trên dữ liệu, thay vì cảm tính
+- **Kiểm chứng giả thuyết** business/ sản phẩm:  
+  "Chiến dịch marketing có hiệu quả không?",  
+  "Version B có tốt hơn Version A không?"
+- **So sánh nhóm**:  
+  "Doanh số 2 khu vực có khác nhau không?",  
+  "Retention của cohort mới có cao hơn không?"
+
+Thay vì trả lời “có/không” một cách tuyệt đối, kiểm định giả thuyết trả lời:
+> “Với dữ liệu hiện có, **có đủ bằng chứng** để tin rằng có sự khác biệt hay không?”
 
 ## 1. Khái Niệm Cơ Bản
 
 ### Null Hypothesis (H0) và Alternative Hypothesis (H1)
 
-- **H0 (Null)**: Giả thuyết mặc định, thường là "không có sự khác biệt"
-- **H1 (Alternative)**: Giả thuyết đối, "có sự khác biệt"
+- **H0 (Null)**: Giả thuyết “không có gì xảy ra”
+  - Không có sự khác biệt
+  - Không có ảnh hưởng
+  - Không có mối quan hệ
+- **H1 (Alternative)**: Giả thuyết bạn muốn chứng minh
+  - Có sự khác biệt
+  - Có ảnh hưởng
+  - Có mối quan hệ
+
+Ví dụ:
+- H0: “Conversion rate của A và B **bằng nhau**”
+- H1: “Conversion rate của A và B **khác nhau**”
 
 ### P-value và Significance Level
 
-- **P-value**: Xác suất quan sát được kết quả nếu H0 đúng
-- **Significance level (α)**: Ngưỡng quyết định, thường là 0.05
-- **Quy tắc**: Nếu p-value < α → Bác bỏ H0, chấp nhận H1
+- **P-value**: Xác suất quan sát được kết quả **ít nhất cực đoan như hiện tại** nếu H0 đúng
+- **Significance level (α)**: Ngưỡng quyết định, thường là 0.05 (5%)
+- **Quy tắc quyết định**:
+  - Nếu **p-value < α** → Bác bỏ H0 → Có đủ bằng chứng ủng hộ H1
+  - Nếu **p-value ≥ α** → Không đủ bằng chứng để bác bỏ H0 (không có nghĩa là H0 đúng)
+
+### Type I & Type II Error
+
+- **Type I error (False Positive)**:
+  - Bác bỏ H0 khi H0 **thực ra đúng**
+  - Xác suất = α (ví dụ α = 0.05 → chấp nhận 5% “báo động giả”)
+- **Type II error (False Negative)**:
+  - Không bác bỏ H0 khi H1 **thực ra đúng**
+  - Xác suất ký hiệu β
+
+### Power of a Test (Độ Mạnh Của Kiểm Định)
+
+- **Power = 1 − β**: Xác suất **phát hiện được hiệu ứng khi nó thật sự tồn tại**
+- Power càng cao:
+  - Càng ít bỏ sót cơ hội tốt
+  - Cần **sample size đủ lớn**
+
+Trong thực tế A/B test, bạn cần:
+- Đặt trước α (thường 0.05)
+- Chọn mức power mong muốn (thường 0.8 hoặc 0.9)
+- Tính **sample size cần thiết** trước khi chạy thử nghiệm
 
 ```python
 from scipy import stats
@@ -48,6 +89,10 @@ else:
 ## 2. One-Sample T-Test
 
 Kiểm tra xem mean của một mẫu có khác với giá trị cụ thể không.
+
+Điều kiện (xấp xỉ):
+- Dữ liệu numeric, gần phân bố chuẩn (hoặc sample size đủ lớn – CLT)
+- Các quan sát độc lập với nhau
 
 ```python
 # Ví dụ: Kiểm tra xem doanh số trung bình có = 50 triệu không?
@@ -93,6 +138,14 @@ else:
 
 So sánh mean của 2 nhóm độc lập.
 
+Các biến thể:
+- **Independent t-test**: 2 nhóm độc lập (khu vực A vs B)
+- **Welch’s t-test**: Dùng khi variance 2 nhóm khác nhau đáng kể
+
+Giả định chính:
+- Dữ liệu numeric, gần chuẩn
+- Các quan sát độc lập giữa 2 nhóm
+
 ```python
 # Ví dụ: So sánh doanh số 2 khu vực
 north_sales = np.random.normal(50000000, 10000000, 50)
@@ -137,6 +190,12 @@ else:
 
 So sánh 2 nhóm có liên quan (cùng đối tượng, khác thời điểm).
 
+Ví dụ:
+- Trước & sau khi triển khai feature mới trên **cùng nhóm user**
+- Trước & sau training trên **cùng nhân viên**
+
+Paired t-test tận dụng việc “bắt cặp” để loại bỏ bớt biến động cá nhân.
+
 ```python
 # Ví dụ: Doanh số cùng khách hàng trước và sau
 customer_ids = range(30)
@@ -161,6 +220,10 @@ else:
 ## 5. Chi-Square Test
 
 Kiểm tra mối quan hệ giữa 2 biến categorical.
+
+Ứng dụng điển hình:
+- Hành vi mua hàng theo **giới tính**, **region**, **segment**
+- Tỷ lệ chọn sản phẩm giữa các **channel** khác nhau
 
 ```python
 # Ví dụ: Mối quan hệ giữa Region và Product preference
@@ -214,6 +277,14 @@ else:
 ## 6. ANOVA (Analysis of Variance)
 
 So sánh mean của nhiều nhóm (≥ 3).
+
+Ý tưởng:
+- Thay vì test từng cặp bằng t-test (tốn công, tăng risk type I),
+- ANOVA kiểm tra **tất cả nhóm cùng lúc**:
+  - H0: Tất cả mean bằng nhau
+  - H1: Có ít nhất một mean khác
+
+Nếu ANOVA cho kết quả significant → dùng **post-hoc test** (Tukey HSD, Bonferroni,…) để biết **nhóm nào khác nhóm nào**.
 
 ```python
 # Ví dụ: So sánh doanh số 3 khu vực
@@ -270,6 +341,12 @@ else:
 ```
 
 ## 7. Case Study: Phân Tích A/B Test
+
+Trong thực tế, A/B test thường cần:
+- Xác định **metric chính** (primary KPI): conversion, ARPU, retention,…
+- Thiết kế **ngẫu nhiên hóa** (randomization) giữa control và treatment
+- Chạy đủ **thời gian & sample size**
+- Chỉ test **một vài giả thuyết rõ ràng**, tránh “vọc dữ liệu rồi mới nghĩ giả thuyết”
 
 ```python
 # A/B Test: So sánh 2 phiên bản website
