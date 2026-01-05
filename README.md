@@ -43,22 +43,11 @@ Phân tích thống kê và kiểm định giả thuyết.
 - [02. Hypothesis Testing](04-statistics-analysis/02-hypothesis-testing.md) - T-test, chi-square, ANOVA
 - [03. Correlation & Regression](04-statistics-analysis/03-correlation-regression.md) - Phân tích tương quan và hồi quy
 
-### 🔴 Phần 5: Nâng Cao
-Kỹ năng nâng cao cho Data Analyst chuyên nghiệp.
+### 🔴 Phần 5: Nâng Cao (coming soon)
 
-- [01. API & Web Scraping](05-advanced/01-api-web-scraping.md) - Thu thập dữ liệu từ web
-- [02. Working with Databases](05-advanced/02-databases.md) - SQLAlchemy, kết nối databases
-- [03. Automation & Scheduling](05-advanced/03-automation.md) - Tự động hóa báo cáo
-- [04. Machine Learning Basics](05-advanced/04-machine-learning-basics.md) - Scikit-learn, model cơ bản
 
 ### 🟣 Phần 6: Problem-Solving & Insights (coming soon)
 
-
-## 🚀 Bắt Đầu Học
-
-1. **Người mới bắt đầu**: Bắt đầu từ [Phần 1: Python Cơ Bản](01-basics/01-python-fundamentals.md)
-2. **Đã biết Python cơ bản**: Bắt đầu từ [Phần 2: Xử Lý Dữ Liệu](02-data-manipulation/01-pandas-intro.md)
-3. **Muốn nâng cao kỹ năng**: Xem [Phần 5: Nâng Cao](05-advanced/01-api-web-scraping.md)
 
 ## 💻 Yêu Cầu
 
